@@ -12,10 +12,12 @@ import TodoForm from "./TodoForm";
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
 
-function EditableTodo() {
-
+function EditableTodo({todo}) {
+  let isEditing = false
   /** Toggle if this is being edited */
-  function toggleEdit() { }
+  function toggleEdit() {
+    isEditing = !isEditing
+   }
 
   /** Call remove fn passed to this. */
   function handleDelete() { }
@@ -26,11 +28,11 @@ function EditableTodo() {
   return (
       <div className="EditableTodo">
 
-                EITHER
+                
 
-                <TodoForm />
+                {isEditing && <TodoForm />}
 
-                OR
+                {!isEditing &&
 
                 <div className="mb-3">
                   <div className="float-right text-sm-right">
@@ -45,8 +47,9 @@ function EditableTodo() {
                       Del
                     </button>
                   </div>
-                  <Todo />
+                  <Todo key={todo.id} id={todo.id} title={todo.title} description={todo.description} priority={todo.priority} />
                 </div>
+}
 
       </div>
   );

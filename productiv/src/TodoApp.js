@@ -22,7 +22,15 @@ function TodoApp() {
 
   /** add a new todo to list */
   function create(newTodo) {
+    console.log("create function newtodo", newTodo)
+    let todo = {...newTodo, id: uuid()}
+    setTodos([...todos.map(t => ({...t})), todo]);
   }
+
+  // function addItem(item) {
+  //   let newItem = { ...item, id: uuid() };
+  //   setItems(items => [...items, newItem]);
+  // }
 
   /** update a todo with updatedTodo */
   function update(updatedTodo) {
@@ -39,7 +47,7 @@ function TodoApp() {
         <div className="col-md-6">
 
           {todos.length > 0
-            ? <EditableTodoList />
+            ? <EditableTodoList todos={todos} />
             : <span className="text-muted">You have no todos.</span>}
         </div>
 
@@ -49,12 +57,12 @@ function TodoApp() {
           {/* (if no top todo, omit this whole section) */}
           {todos.length > 0 && <section className="mb-4">
             <h3>Top Todo</h3>
-            <TopTodo />
+            <TopTodo todos={todos}/>
           </section>}
 
           <section>
             <h3 className="mb-3">Add Nü</h3>
-              <TodoForm />
+              <TodoForm handleSave={create}/>
             </section>
         </div>
 
