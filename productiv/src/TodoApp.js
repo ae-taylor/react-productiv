@@ -16,15 +16,15 @@ import EditableTodoList from "./EditableTodoList";
  * App -> TodoApp -> { TodoForm, EditableTodoList }
  */
 
-function TodoApp() {
+function TodoApp({initialTodos}) {
 
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState(initialTodos)
 
   /** add a new todo to list */
   function create(newTodo) {
     console.log("create function newtodo", newTodo)
-    let todo = {...newTodo, id: uuid()}
-    setTodos([...todos.map(t => ({...t})), todo]);
+    let todo = { ...newTodo, id: uuid() }
+    setTodos(todos => [...todos, todo]);
   }
 
   // function addItem(item) {
@@ -33,12 +33,16 @@ function TodoApp() {
   // }
 
   /** update a todo with updatedTodo */
+  //use callback pattern
+  //TODO use map, if todo id matches updated todo id replace. MAP will keep everything in the same order
   function update(updatedTodo) {
-   setTodos([...todos.filter(todo => todo.id !== updatedTodo.id), updatedTodo])
+    setTodos(todos => [...todos.filter(todo => todo.id !== updatedTodo.id), updatedTodo])
   }
 
   /** delete a todo by id */
+  //use callback pattern
   function remove(id) {
+    setTodos(todos => todos.filter(todo => todo.id !== id));
   }
 
   return (
@@ -48,7 +52,7 @@ function TodoApp() {
         <div className="col-md-6">
 
           {todos.length > 0
-            ? <EditableTodoList todos={todos} update={update} />
+            ? <EditableTodoList todos={todos} update={update} remove={remove} />
             : <span className="text-muted">You have no todos.</span>}
         </div>
 
@@ -58,13 +62,15 @@ function TodoApp() {
           {/* (if no top todo, omit this whole section) */}
           {todos.length > 0 && <section className="mb-4">
             <h3>Top Todo</h3>
-            <TopTodo todos={todos}/>
+            <TopTodo todos={todos} />
           </section>}
 
           <section>
             <h3 className="mb-3">Add Nü</h3>
-              <TodoForm handleSave={create} initialFormData={{title: "", description: "", priority: 1}}/>
-            </section>
+            <TodoForm 
+              handleSave={create}
+              />
+          </section>
         </div>
 
       </div>
