@@ -34,6 +34,7 @@ function TodoApp() {
 
   /** update a todo with updatedTodo */
   function update(updatedTodo) {
+   setTodos([...todos.filter(todo => todo.id !== updatedTodo.id), updatedTodo])
   }
 
   /** delete a todo by id */
@@ -47,7 +48,7 @@ function TodoApp() {
         <div className="col-md-6">
 
           {todos.length > 0
-            ? <EditableTodoList todos={todos} />
+            ? <EditableTodoList todos={todos} update={update} />
             : <span className="text-muted">You have no todos.</span>}
         </div>
 
@@ -62,7 +63,7 @@ function TodoApp() {
 
           <section>
             <h3 className="mb-3">Add Nü</h3>
-              <TodoForm handleSave={create}/>
+              <TodoForm handleSave={create} initialFormData={{title: "", description: "", priority: 1}}/>
             </section>
         </div>
 

@@ -12,25 +12,30 @@ import TodoForm from "./TodoForm";
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
 
-function EditableTodo({todo}) {
-  let isEditing = false
+function EditableTodo({todo, update}) {
+
+  const [isEditing, setIsEditing ] = useState(false)
+
   /** Toggle if this is being edited */
   function toggleEdit() {
-    isEditing = !isEditing
+    isEditing ? setIsEditing(false): setIsEditing(true)
    }
 
   /** Call remove fn passed to this. */
   function handleDelete() { }
 
   /** Edit form saved; toggle isEditing and update in ancestor. */
-  function handleSave(formData) { }
+  function handleSave(formData) {
+    update(formData)
+    toggleEdit()
+   }
 
   return (
       <div className="EditableTodo">
 
-                
-
-                {isEditing && <TodoForm />}
+                {isEditing && <TodoForm 
+                              initialFormData={todo}
+                              handleSave={handleSave} />}
 
                 {!isEditing &&
 
