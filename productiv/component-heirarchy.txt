@@ -1,0 +1,32 @@
+App:
+  -Header
+  -ToDoApp
+  -footer
+
+ToDoApp:
+  STATE: todos [id, title, priority, description]
+
+  edit function
+  delete function
+  add function
+
+  - todo List
+  - top todo
+  - add form
+
+ToDoList:
+  will render todo or form
+  - todo
+  - form
+
+
+ToDo:
+  -todo {edit handleEdit, delete, todoData}
+  
+
+TopTodo:
+ - todo {todoData}
+
+
+ Form: 
+{add function}
